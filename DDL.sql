@@ -38,7 +38,7 @@ CREATE OR REPLACE TABLE Stars (
 CREATE OR REPLACE TABLE Shows (
     show_id int AUTO_INCREMENT,
     title VARCHAR(500) NULL,
-    date TIMESTAMP() NOT NULL,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (show_id)
 );
 
@@ -81,6 +81,8 @@ CREATE OR REPLACE TABLE Show_Customers (
 -- Constellations Source: https://www.go-astronomy.com/constellations.htm
 INSERT INTO Constellations (name, northern_hemisphere) VALUES
 ("Andromeda", 1),
+("Ursa Major", 1),
+("Ursa Minor", 1),
 ("Antlia", 0),
 ("Apus", 0),
 ("Aquarius", 0),
@@ -172,10 +174,10 @@ INSERT INTO Constellations (name, northern_hemisphere) VALUES
 */
 
 INSERT INTO Stars (constellation_id, proper_name, temperature, radius, color, spectral_class) VALUES
-(83, "Dubhe", 4650, 26.85, "Orange", "K"),
-(83, "Merak", 9700, 2.81, "Blue-White", "A"),
-(83, "Phecda", 6751, 3.38, "White", "A"),
-(83, "Megrez", 6909, 2.51, "White", "A"),
+(2, "Dubhe", 4650, 26.85, "Orange", "K"),
+(2, "Merak", 9700, 2.81, "Blue-White", "A"),
+(2, "Phecda", 6751, 3.38, "White", "A"),
+(2, "Megrez", 6909, 2.51, "White", "A"),
 (NULL, "Sun", 5772, 1, "White", "G");
 
 INSERT INTO Shows (title, date) VALUES
