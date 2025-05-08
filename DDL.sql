@@ -81,8 +81,6 @@ CREATE OR REPLACE TABLE Show_Customers (
 -- Constellations Source: https://www.go-astronomy.com/constellations.htm
 INSERT INTO Constellations (name, northern_hemisphere) VALUES
 ("Andromeda", 1),
-("Ursa Major", 1),
-("Ursa Minor", 1),
 ("Antlia", 0),
 ("Apus", 0),
 ("Aquarius", 0),
@@ -91,7 +89,9 @@ INSERT INTO Constellations (name, northern_hemisphere) VALUES
 ("Aries", 1),
 ("Auriga", 1),
 ("Boötes", 1),
-("Caelum", 0);
+("Caelum", 0),
+("Ursa Major", 1),
+("Ursa Minor", 1);
 /* Not Needed Currently
 ("Camelopardalis", 1),
 ("Cancer", 1),
@@ -174,10 +174,10 @@ INSERT INTO Constellations (name, northern_hemisphere) VALUES
 */
 
 INSERT INTO Stars (constellation_id, proper_name, temperature, radius, color, spectral_class) VALUES
-(2, "Dubhe", 4650, 26.85, "Orange", "K"),
-(2, "Merak", 9700, 2.81, "Blue-White", "A"),
-(2, "Phecda", 6751, 3.38, "White", "A"),
-(2, "Megrez", 6909, 2.51, "White", "A"),
+((SELECT constellation_id FROM Constellations WHERE name = "Ursa Major"), "Dubhe", 4650, 26.85, "Orange", "K"),
+((SELECT constellation_id FROM Constellations WHERE name = "Ursa Major"), "Merak", 9700, 2.81, "Blue-White", "A"),
+((SELECT constellation_id FROM Constellations WHERE name = "Ursa Major"), "Phecda", 6751, 3.38, "White", "A"),
+((SELECT constellation_id FROM Constellations WHERE name = "Ursa Major"), "Megrez", 6909, 2.51, "White", "A"),
 (NULL, "Sun", 5772, 1, "White", "G");
 
 INSERT INTO Shows (title, date) VALUES
@@ -191,23 +191,23 @@ INSERT INTO Customers (name, phone_number, email) VALUES
 ("Wanda Cosmo", "5412345667", "FortniteGamer@yahoo.com");
 
 INSERT INTO Show_Stars (show_id, star_id) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(3, 4);
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT star_id FROM Stars WHERE proper_name = "Dubhe")),
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT star_id FROM Stars WHERE proper_name = "Merak")),
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT star_id FROM Stars WHERE proper_name = "Phecda")),
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT star_id FROM Stars WHERE proper_name = "Megrez")),
+((SELECT show_id FROM Shows WHERE title = "Venture into the Cosmos"), (SELECT star_id FROM Stars WHERE proper_name = "Megrez"));
 
 INSERT INTO Show_Constellations (show_id, constellation_id) VALUES
-(1, 1),
-(2, 4),
-(2, 7);
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT constellation_id FROM Constellations WHERE name = "Andromeda")),
+((SELECT show_id FROM Shows WHERE title = "Astrology Night"), (SELECT constellation_id FROM Constellations WHERE name = "Aquarius")),
+((SELECT show_id FROM Shows WHERE title = "Astrology Night"), (SELECT constellation_id FROM Constellations WHERE name = "Aries"));
 
 INSERT INTO Show_Customers (show_id, customer_id) VALUES
-(1, 1),
-(2, 2),
-(2, 3),
-(3, 1),
-(3, 3);
+((SELECT show_id FROM Shows WHERE title = "The Big Dipper"), (SELECT customer_id FROM Customers WHERE name = "Henry Thistle")),
+((SELECT show_id FROM Shows WHERE title = "Astrology Night"), (SELECT customer_id FROM Customers WHERE name = "Sad Happy")),
+((SELECT show_id FROM Shows WHERE title = "Astrology Night"), (SELECT customer_id FROM Customers WHERE name = "Wanda Cosmo")),
+((SELECT show_id FROM Shows WHERE title = "Venture into the Cosmos"), (SELECT customer_id FROM Customers WHERE name = "Henry Thistle")),
+((SELECT show_id FROM Shows WHERE title = "Venture into the Cosmos"), (SELECT customer_id FROM Customers WHERE name = "Wanda Cosmo"));
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
