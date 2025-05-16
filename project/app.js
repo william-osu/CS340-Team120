@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = 6839;
+const PORT = 5867;
 
 // Database
 const db = require('./database/db-connector');
@@ -32,6 +32,26 @@ app.get('/', async function (req, res) {
     }
 });
 
+app.get('/Constellations', async function (req, res) {
+    try {
+        // Create and execute our queries
+        // In query1, we use select to show the table names of the Constellations table names
+        const query1 = `SELECT Constellations.constellation_id, Constellations.name, Constellations.northern_hemisphere \
+            FROM Constellations`;
+        const [Constellations] = await db.query(query1);
+
+        // Render the Constellations.hbs file, and also send the renderer
+        //  an object that contains our Constellations information
+        res.render('Constellations', { Constellations: Constellations});
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+
+});
 
 app.get('/Stars', async function (req, res) {
     try {
@@ -75,27 +95,6 @@ app.get('/Shows', async function (req, res) {
 
 });
 
-app.get('/Constellations', async function (req, res) {
-    try {
-        // Create and execute our queries
-        // In query1, we use select to show the table names of the Constellations table names
-        const query1 = `SELECT Constellations.constellation_id, Constellations.name, Constellations.northern_hemisphere \
-            FROM Constellations`;
-        const [Constellations] = await db.query(query1);
-
-        // Render the Constellations.hbs file, and also send the renderer
-        //  an object that contains our Constellations information
-        res.render('Constellations', { Constellations: Constellations});
-    } catch (error) {
-        console.error('Error executing queries:', error);
-        // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
-        );
-    }
-
-});
-
 app.get('/Customers', async function (req, res) {
     try {
         // Create and execute our queries
@@ -117,6 +116,24 @@ app.get('/Customers', async function (req, res) {
     }
 });
 
+app.get('/Show_Customers', async function (req, res) {
+    try {
+        // Create and execute our queries
+        // In query1, we use select to display the names of Show_Customers
+        const query1 = `SELECT Show_Customers.show_id, Show_Customers.customer_id FROM Show_Customers`;
+        const [Show_Customers] = await db.query(query1);
+
+        // Render the Show_Customers.hbs file, and also send the renderer
+        //  an object that contains our Show_Customers information
+        res.render('Show_Customers', { Show_Customers: Show_Customers});
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 app.get('/Show_Constellations', async function (req, res) {
     try {
@@ -136,7 +153,6 @@ app.get('/Show_Constellations', async function (req, res) {
         );
     }
 });
-
 
 app.get('/Show_Stars', async function (req, res) { 
     try {
@@ -159,24 +175,7 @@ app.get('/Show_Stars', async function (req, res) {
 });
 
 
-app.get('/Show_Customers', async function (req, res) {
-    try {
-        // Create and execute our queries
-        // In query1, we use select to display the names of Show_Customers
-        const query1 = `SELECT Show_Customers.show_id, Show_Customers.customer_id FROM Show_Constellations`;
-        const [Show_Constellations] = await db.query(query1);
 
-        // Render the Show_Customers.hbs file, and also send the renderer
-        //  an object that contains our Show_Customers information
-        res.render('Show_Customers', { Show_Customers: Show_Customers});
-    } catch (error) {
-        console.error('Error executing queries:', error);
-        // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
-        );
-    }
-});
 
 
 // ########################################
