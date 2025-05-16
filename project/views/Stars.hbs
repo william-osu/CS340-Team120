@@ -1,0 +1,123 @@
+<h1>Stars</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            {{#each Stars.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the id, fname, lname, homeworld and age }}
+        {{#each Stars}}
+        <tr>
+            <td>{{this.star_id}}</td>
+            <td>{{this.constellation_id}}</td>
+            <td>{{this.proper_name}}</td>
+            <td>{{this.temperature}}</td>
+            <td>{{this.radius}}</td>
+            <td>{{this.color}}</td>
+            <td>{{this.spectral_class}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_star_form'>
+                <input type='hidden' name='delete_star_id' value='{{this.star_id}}' />
+                <input type='hidden' name='delete_proper_name' value='{{this.proper_name}}' />
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Create a Star</h2>
+<form class='cuForm' id='create_star_form'>
+
+    
+
+    <label for='create_star_constellation_id'>Constellation id: </label>
+    <select name='create_star_constellation_id' id='create_star_constellation_id'>
+        <option value='NULL' selected>Select a Constellation name</option>
+        <option value='NULL'>&lt; None &gt;</option>
+        {{#each Constellations}}
+        <option value='{{this.constellation_id}}' required>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for='create_star_proper_name'>Proper Name: </label>
+    <input type='text' name='create_star_proper_name' id='create_star_proper_name' min='0' />
+
+    <label for='create_star_temperature'>Temperature: </label>
+    <input type='int' name='create_star_temperature' id='create_star_temperature'/>
+
+    <label for='create_star_radius'>Radius: </label>
+    <input type='int' name='create_star_radius' id='create_star_radius' min='0' />
+
+    <label for='create_star_color'>Color : </label>
+    <input type='text' name='create_star_color' id='create_star_color' min='0' />
+
+    <label for='create_star_spectral_class'>Spectral Class: </label>
+    <input type='text' name='create_star_spectral_class' id='create_star_spectral_class' min='0' />
+
+   
+    <input type='submit' />
+</form>
+
+
+{{! UPDATE form }}
+<h2>Update a Star</h2>
+<form class='cuForm' id='update_star_form'>
+    <label for='update_star_id'>Star to Update: </label>
+    <select name='update_star_id' id='update_star_id' required>
+        <option value='' disabled selected>Select a Star</option>
+        {{#each people}}
+        <option value='{{this.id}}' required>
+            {{this.id}}
+            -
+            {{this.proper_name}}
+        </option>
+        {{/each}}
+    </select>
+
+
+    <label for='update_star_constellation_id'>Constellation id: </label>
+    <select name='update_star_constellation_id' id='update_star_constellation_id'>
+        <option value='NULL' selected>Select a Constellation name</option>
+        <option value='NULL'>&lt; None &gt;</option>
+        {{#each Constellations}}
+        <option value='{{this.constellation_id}}' required>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+
+    <label for='update_star_proper_name'>Proper Name: </label>
+    <input type='text' name='update_star_proper_name' id='update_star_proper_name' min='0' />
+
+    <label for='update_star_temperature'>Temperature: </label>
+    <input type='int' name='update_star_temperature' id='update_star_temperature'/>
+
+    <label for='update_star_radius'>Radius: </label>
+    <input type='int' name='update_star_radius' id='update_star_radius' min='0' />
+
+    <label for='update_star_color'>Color : </label>
+    <input type='text' name='update_star_color' id='update_star_color' min='0' />
+
+    <label for='update_star_spectral_class'>Spectral Class: </label>
+    <input type='text' name='update_star_spectral_class' id='update_star_spectral_class' min='0' />
+
+    
+
+    <input type='submit' />
+</form>

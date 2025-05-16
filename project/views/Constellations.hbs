@@ -1,0 +1,85 @@
+<h1>Constellations</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            {{#each Constellations.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the constellation_id, name, northern_hemisphere }}
+        {{#each Constellations}}
+        <tr>
+            <td>{{this.constellation_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.northern_hemisphere}}</td>
+        
+
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+              {{! <input type='hidden' name='delete_person_id' value='{{this.id' />}}
+               {{! <input type='hidden' name='delete_person_name' value='{{this.fname' /> }}
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Create a Constellation</h2>
+<form class='cuForm' id='create_constellation_form'>
+
+    <label for='create_constellation_name '>Name: </label>
+    <input type='text' name='create_constellation_name' id='create_constellation_name' min='0' />
+
+    <label for='create_constellation_northern_hemisphere'>Northern Hemisphere: </label>
+    <select name='create_constellation_northern_hemisphere' id='create_constellation_northern_hemisphere'>
+        <option value='NULL' selected>Yes</option>
+        <option value='NULL'>No</option>
+    </select>
+   
+    <input type='submit' />
+</form>
+
+
+{{! UPDATE form }}
+<h2>Update a Constellation</h2>
+<form class='cuForm' id='update_constellation_form'>
+    <label for='update_constellation_id'>constellation to Update: </label>
+    <select name='update_constellation_id' id='update_constellation_id' required>
+        <option value='' disabled selected>Select a constellation</option>
+        {{#each people}}
+        <option value='{{this.id}}' required>
+            {{this.id}}
+            -
+            {{this.name}}
+        </option>
+        {{/each}}
+    </select>
+
+
+    <label for='update_constellation_name '>Name: </label>
+    <input type='text' name='update_constellation_name' id='update_constellation_name' min='0' />
+
+    <label for='update_constellation_northern_hemisphere'>Northern Hemisphere: </label>
+    <select name='update_constellation_northern_hemisphere' id='update_constellation_northern_hemisphere'>
+        <option value='NULL' selected>Yes</option>
+        <option value='NULL'>No</option>
+    </select>
+    
+
+    <input type='submit' />
+</form>
