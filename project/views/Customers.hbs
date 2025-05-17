@@ -5,12 +5,10 @@
     <thead>
         {{! For the table header row, we print the DB attribute names }}
         <tr>
-            {{#each Customers.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th></th>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
         </tr>
     </thead>
 

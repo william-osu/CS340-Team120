@@ -32,6 +32,7 @@ CREATE OR REPLACE TABLE Stars (
     spectral_class CHAR(1) NOT NULL,
     PRIMARY KEY (star_id),
     FOREIGN KEY (constellation_id) REFERENCES Constellations(constellation_id)
+        ON DELETE NULL
 );
 
 -- Date in "year-month-day hour:minute:second" format
@@ -56,22 +57,28 @@ CREATE OR REPLACE TABLE Customers (
 CREATE OR REPLACE TABLE Show_Stars (
     star_id int NOT NULL,
     show_id int NOT NULL,
-    FOREIGN KEY (star_id) REFERENCES Stars(star_id),
+    FOREIGN KEY (star_id) REFERENCES Stars(star_id)
+        ON DELETE CASCADE,
     FOREIGN KEY (show_id) REFERENCES Shows(show_id)
+        ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE Show_Constellations (
     constellation_id int NOT NULL,
     show_id int NOT NULL,
-    FOREIGN KEY (constellation_id) REFERENCES Constellations(constellation_id),
+    FOREIGN KEY (constellation_id) REFERENCES Constellations(constellation_id)
+        ON DELETE CASCADE,
     FOREIGN KEY (show_id) REFERENCES Shows(show_id)
+        ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE Show_Customers (
     customer_id int NOT NULL,
     show_id int NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+        ON DELETE CASCADE,
     FOREIGN KEY (show_id) REFERENCES Shows(show_id)
+        ON DELETE CASCADE
 );
 
 --
