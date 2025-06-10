@@ -24,7 +24,7 @@
 
 
             {{! DELETE form }}
-            <form id='delete_person_form'>
+            <form id='delete_person_form' method='POST' action='/Shows/delete'>
                 <input type='hidden' name='delete_show_id' value='{{this.show_id}}' />
                 <input type='hidden' name='delete_title' value='{{this.title}}' />
                 <td>
@@ -40,7 +40,7 @@
 
 {{! CREATE form }}
 <h2>Create a Show</h2>
-<form class='cuForm' id='create_show_form' method='POST' action='/Shows/create'></form>
+<form class='cuForm' id='create_show_form' method='POST' action='/Shows/create'>
 
     <label for='create_show_title'>Title: </label>
     <input type='text' name='create_show_title' id='create_show_title' min='0' />
@@ -53,15 +53,14 @@
 
 {{! UPDATE form }}
 <h2>Update a Show</h2>
-<form class='cuForm' id='update_show_form'>
-<form class='cuForm' id='update_show_form' method='POST' action='/Shows/update'></form>
+<form class='cuForm' id='update_show_form' method='POST' action='/Shows/update'>
 
     <label for='update_show_id'>Show to Update: </label>
     <select name='update_show_id' id='update_show_id' required>
         <option value='' disabled selected>Select a Show</option>
         {{#each Shows}}
-        <option value='{{this.id}}' required>
-            {{this.id}}
+        <option value='{{this.show_id}}' required>
+            {{this.show_id}}
             -
             {{this.title}}
         </option>

@@ -24,8 +24,8 @@
         
 
             {{! DELETE form }}
-            <form id='delete_constellation_form' method='POST' action='/Constellations/delete'></form>
-                <input type='hidden' name='delete_customer_id' value='{{this.constellation_id}}' />
+            <form id='delete_constellation_form' method='POST' action='/Constellations/delete'>
+                <input type='hidden' name='delete_constellation_id' value='{{this.constellation_id}}' />
                 <input type='hidden' name='delete_name' value='{{this.name}}' />
                 <td>
                     <button type='submit'>
@@ -37,6 +37,7 @@
         {{/each}}
     </tbody>
 </table>
+
 
 {{! CREATE form }}
 <h2>Create a Constellation</h2>
@@ -57,13 +58,13 @@
 
 {{! UPDATE form }}
 <h2>Update a Constellation</h2>
-<form class='cuForm' id='update_constellation_form' method='POST' action='/Constellations/update'></form>
-    <label for='update_constellation_id'>constellation to Update: </label>
+<form class='cuForm' id='update_constellation_form' method='POST' action='/Constellations/update'>
+    <label for='update_constellation_id'>Constellation to update: </label>
     <select name='update_constellation_id' id='update_constellation_id' required>
         <option value='' disabled selected>Select a constellation</option>
         {{#each Constellations}}
-        <option value='{{this.Constellation_id}}' required>
-            {{this.Constellation_id}}
+        <option value='{{this.constellation_id}}' required>
+            {{this.constellation_id}}
             -
             {{this.name}}
         </option>

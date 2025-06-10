@@ -27,7 +27,7 @@
             <td>{{this.spectral_class}}</td>
 
             {{! DELETE form }}
-            <form id='delete_star_form'>
+            <form id='delete_star_form' method='POST' action='/Stars/delete'>
                 <input type='hidden' name='delete_star_id' value='{{this.star_id}}' />
                 <input type='hidden' name='delete_proper_name' value='{{this.proper_name}}' />
                 <td>
@@ -43,7 +43,7 @@
 
 {{! CREATE form }}
 <h2>Create a Star</h2>
-<form class='cuForm' id='create_star_form' method='POST' action='/Stars/create'></form>
+<form class='cuForm' id='create_star_form' method='POST' action='/Stars/create'>
 
     
 
@@ -81,7 +81,7 @@
 
 {{! UPDATE form }}
 <h2>Update a Star</h2>
-<form class='cuForm' id='update_star_form' method='POST' action='/Stars/update'></form>
+<form class='cuForm' id='update_star_form' method='POST' action='/Stars/update'>
     <label for='update_star_id'>Star to Update: </label>
     <select name='update_star_id' id='update_star_id' required>
         <option value='' disabled selected>Select a Star</option>

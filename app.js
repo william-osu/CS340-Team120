@@ -233,10 +233,11 @@ app.post('/Stars/create', async function (req, res) {
         // Store ID of last inserted row
         const [[[rows]]] = await db.query(query1, [
             data.create_star_proper_name,
+            data.create_star_constellation_id,
             data.create_star_temperature,
             data.create_star_radius,
             data.create_star_color,
-            data.create_star_spectral_class,
+            data.create_star_spectral_class
         ]);
 
         console.log(`CREATE Star. ID: ${rows.new_id} ` +
@@ -266,7 +267,7 @@ app.post('/Shows/create', async function (req, res) {
         ]);
 
         console.log(`CREATE Show. ID: ${rows.new_id} ` +
-            `Title: ${data.create_Show_title}`
+            `Title: ${data.create_show_title}`
         );
 
         // Redirect the user to the updated webpage
@@ -344,6 +345,103 @@ app.post('/Show_Customers/update', async function (req, res) {
 });
 
 // UPDATE ROUTES
+app.post('/Constellations/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateConstellations(?, ?, ?);';
+        const query2 = 'SELECT name FROM Constellations WHERE constellation_id = ?;';
+        await db.query(query1, [
+            data.update_constellation_id,
+            data.update_constellation_name,
+            data.update_constellation_northern_hemisphere
+        ]);
+        const [[row]] = await db.query(query2, [data.update_constellation_id]);
+
+        console.log(`UPDATE Constellation. ID: ${data.update_constellation_id} ` +
+            `Name: ${row.name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Constellations');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/Stars/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateStars(?, ?, ?, ?, ?, ?, ?);';
+        const query2 = 'SELECT proper_name FROM Stars WHERE star_id = ?;';
+        await db.query(query1, [
+            data.update_star_id,
+            data.update_star_proper_name,
+            data.update_star_constellation_id,
+            data.update_star_temperature,
+            data.update_star_radius,
+            data.update_star_color,
+            data.update_star_spectral_class
+        ]);
+        const [[row]] = await db.query(query2, [data.update_star_id]);
+
+        console.log(`UPDATE Star. ID: ${data.update_star_id} ` +
+            `Name: ${row.proper_name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Stars');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/Shows/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateShows(?, ?, ?);';
+        const query2 = 'SELECT title FROM Shows WHERE show_id = ?;';
+        await db.query(query1, [
+            data.update_show_id,
+            data.update_show_title,
+            data.update_show_date
+        ]);
+        const [[row]] = await db.query(query2, [data.update_show_id]);
+
+        console.log(`UPDATE Show. ID: ${data.update_show_id} ` +
+            `Title: ${row.title}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Shows');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
 app.post('/Customers/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -378,6 +476,81 @@ app.post('/Customers/update', async function (req, res) {
 });
 
 // DELETE ROUTES
+app.post('/Constellations/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteConstellations(?);`;
+        await db.query(query1, [data.delete_constellation_id]);
+
+        console.log(`DELETE Customer. ID: ${data.delete_constellation_id} ` +
+            `Name: ${data.delete_constellation_name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Constellations');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/Stars/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteStars(?);`;
+        await db.query(query1, [data.delete_star_id]);
+
+        console.log(`DELETE Star. ID: ${data.delete_star_id} ` +
+            `Name: ${data.delete_star_name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Stars');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/Shows/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteShows(?);`;
+        await db.query(query1, [data.delete_show_id]);
+
+        console.log(`DELETE Show. ID: ${data.delete_show_id} ` +
+            `Title: ${data.delete_show_title}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/Shows');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
 app.post('/Customers/delete', async function (req, res) {
     try {
         // Parse frontend form information
